@@ -4,9 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.ts",
+    "build": "tsc -p ./"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "typescript",
+    "restful",
+    "rest",
+    "nodejs",
+    "expo"
+  ],
+  "author": "Stenio Wagner",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^2.0.1",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
+  }
 }
