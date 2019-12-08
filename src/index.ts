@@ -1,3 +1,12 @@
-const x: any = '123';
+import express from 'express';
 
-console.log(x);
+const app = express();
+
+app.get('/', (req, res) => {
+  console.log(process.env.NODE);
+  return res.send('Hej hej!');
+});
+
+console.log(process.env.NODE);
+
+app.listen(4000, '0.0.0.0');

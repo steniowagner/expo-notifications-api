@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "build": "tsc -p ./",
     "lint": "eslint '**/*.ts'",
-    "lint:fix": "prettier-eslint '**/*.ts' --write"
+    "lint:fix": "prettier '**/*.ts' --write"
   },
   "husky": {
     "hooks": {
@@ -45,5 +45,8 @@
     "prettier-eslint-cli": "^5.0.0",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
