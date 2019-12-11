@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "NODE_ENV=development nodemon src/app.ts",
     "build": "tsc -p ./",
     "lint": "eslint '**/*.ts'",
     "lint:fix": "prettier '**/*.ts' --write"
@@ -31,6 +31,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.5.32",
     "@types/node": "^12.12.14",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
@@ -47,6 +48,10 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "expo-server-sdk": "^3.4.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.14"
   }
 }

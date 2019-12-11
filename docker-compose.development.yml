@@ -2,19 +2,19 @@ version: '3'
 
 services:
   server:
-    command: node_modules/.bin/nodemon --exec npm run dev
     container_name: expo-notifications-server
+    command: npm run dev
+    restart: always
     volumes:
-      - .:/user/app/server
-      - /user/app/server/node_modules
+      - .:/usr/app/server
     environment:
       NODE_ENV: development
     ports:
       - '4000:4000'
-    links:
-      - database
     tty: true
     build: .
+    depends_on:
+      - database
 
   database:
     container_name: expo-notifications-mongo
