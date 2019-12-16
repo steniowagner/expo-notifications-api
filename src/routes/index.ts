@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 
+import pushNotificationsRotues from '../routes/push-notifications';
 import userRoutes from '../routes/user';
 
 const router = express.Router();
@@ -12,6 +13,7 @@ router.get(
     }),
 );
 
+router.use('/push-notifications', pushNotificationsRotues);
 router.use('/users', userRoutes);
 
 export default router;

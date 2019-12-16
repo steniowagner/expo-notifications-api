@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import getErrorStatusCode from './utils/getErrorStatusCode';
+import handleControllerError from './utils/handleControllerError';
 import UserRepository from '../repository/User';
 
 const create = async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
@@ -13,9 +13,7 @@ const create = async (req: Request, res: Response, next: NextFunction): Promise<
       id,
     });
   } catch (err) {
-    err.status = getErrorStatusCode(err);
-
-    next(err);
+    handleControllerError(err, next);
   }
 };
 
@@ -27,9 +25,7 @@ const read = async (_req: Request, res: Response, next: NextFunction): Promise<R
       users,
     });
   } catch (err) {
-    err.status = getErrorStatusCode(err);
-
-    next(err);
+    handleControllerError(err, next);
   }
 };
 
@@ -47,9 +43,7 @@ const readOne = async (req: Request, res: Response, next: NextFunction): Promise
       user,
     });
   } catch (err) {
-    err.status = getErrorStatusCode(err);
-
-    next(err);
+    handleControllerError(err, next);
   }
 };
 
@@ -65,9 +59,7 @@ const update = async (req: Request, res: Response, next: NextFunction): Promise<
 
     return res.status(200).send({ user });
   } catch (err) {
-    err.status = getErrorStatusCode(err);
-
-    next(err);
+    handleControllerError(err, next);
   }
 };
 
@@ -83,9 +75,7 @@ const remove = async (req: Request, res: Response, next: NextFunction): Promise<
 
     return res.status(200).send({ user });
   } catch (err) {
-    err.status = getErrorStatusCode(err);
-
-    next(err);
+    handleControllerError(err, next);
   }
 };
 

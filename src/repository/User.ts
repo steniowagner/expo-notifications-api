@@ -20,7 +20,7 @@ const create = async (data: User): Promise<Document> => {
   }
 };
 
-const read = async (): Promise<Array<Document>> => {
+const read = async (): Promise<Document[]> => {
   try {
     return UserModel.find();
   } catch (err) {
