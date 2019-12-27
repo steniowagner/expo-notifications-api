@@ -1,6 +1,6 @@
-import { Error, Types } from 'mongoose';
+import { Document, Error, Types } from 'mongoose';
 
-export interface User {
+export interface User extends Document {
   notificationToken: string;
   _id: Types.ObjectId;
   email: string;

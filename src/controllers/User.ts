@@ -6,7 +6,6 @@ import UserRepository from '../repository/User';
 const create = async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
   try {
     const { body } = req;
-
     const { id } = await UserRepository.create(body);
 
     return res.status(201).send({

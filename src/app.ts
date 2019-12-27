@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
 import routeNotFound from './middlewares/routeNotFound';
@@ -24,6 +24,12 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.use('/expo-notifications/api/v1', routes);
 

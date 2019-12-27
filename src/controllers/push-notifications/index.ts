@@ -12,7 +12,14 @@ import buildNotifications from './buildNotifications';
 import sendNotifications from './sendNotifications';
 import getValidTokens from './getValidTokens';
 
+import { User } from '../../types';
+
 const expo = new Expo();
+
+type ShippingError = {
+  user: User | undefined;
+  reason: string;
+};
 
 const send = async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
   try {
@@ -24,11 +31,10 @@ const send = async (req: Request, res: Response, next: NextFunction): Promise<Re
       });
     }
 
-    const users = await UserRepository.read();
+    const users = (await UserRepository.read()) as User[];
 
     const validTokens = getValidTokens(tokens, users);
     const notifications = buildNotifications(validTokens, body, title);
-
     const tickets = await sendNotifications(expo, notifications);
 
     const resultsFromExpo = getPushResultsFromExpo(tickets);
@@ -38,13 +44,28 @@ const send = async (req: Request, res: Response, next: NextFunction): Promise<Re
     const ticketsNotRegistered = [...resultsFromExpo.ticketsNotRegistered, ...errorsFromProvider.ticketsNotRegistered];
     const ticketsWithErrors = [...resultsFromExpo.ticketsWithErrors, ...errorsFromProvider.ticketsWithErrors];
 
+    let shippingErrors: ShippingError[] = [];
+    let usersNotRegistered: User[] = [];
+
+    if (ticketsWithErrors.length) {
+      shippingErrors = ticketsWithErrors.map(({ message, token }) => {
+        const user = users.find(({ notificationToken }) => notificationToken === token);
+
+        return {
+          reason: message,
+          user,
+        };
+      });
+    }
+
     if (ticketsNotRegistered.length) {
+      usersNotRegistered = users.filter(({ notificationToken }) => ticketsNotRegistered.includes(notificationToken));
       await removeTokensNotRegistered(ticketsNotRegistered, users);
     }
 
     return res.status(200).send({
-      ticketsNotRegistered,
-      ticketsWithErrors,
+      usersNotRegistered,
+      shippingErrors,
     });
   } catch (err) {
     handleControllerError(err, next);
